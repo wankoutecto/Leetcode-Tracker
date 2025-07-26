@@ -1,0 +1,40 @@
+services:
+  backend:
+    build:
+      context: ./TrackerApp
+    container_name: leetcode-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/TrackerDb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SECRET_KEY: 2E1uOv9E6zblcNUGWcKpvmkKYI5D6tJ7Rfcd2x2jsnE=
+
+  db:
+    image: postgres:latest
+    container_name: leetcode-db
+    environment:
+      POSTGRES_DB: TrackerDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  frontend:
+    build:
+      context: ./Tracker_frontend
+    container_name: leetcode-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+
+
+volumes:
+  pgdata:
