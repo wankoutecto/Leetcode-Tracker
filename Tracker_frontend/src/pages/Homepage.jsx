@@ -21,17 +21,17 @@ export default function Homepage(){
   const [problemList, setProblemList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState(TABS[0]);
+  const [activeTab, setActiveTab] = useState("Dashboard");
   const navigate = useNavigate();
   const [update, setUpdate] = useState(0);
 
   const onUpdate = () => {
     setUpdate(prev => prev + 1);
-  }
+  };
 
   const onMoveToTab = (title) => {
     setActiveTab(title);
-  }
+  };
 
   useEffect(() => {
     
@@ -49,9 +49,7 @@ export default function Homepage(){
       }
     }
 
-    if(token){
-      fetchData();
-    }  
+    fetchData();
   }, [activeTab, token]);
 
 

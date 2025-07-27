@@ -46,11 +46,12 @@ export default function Dashboard({activeTab, update, onUpdate, onMoveToTab}){
                     })
                 ]);
                 
-                if (dueRes.data.data.length > 0) setDueToday(dueRes.data.data[0]);          
-                if (futureRes.data.data.length > 0) setFuture(futureRes.data.data[0]);
-                if (overdueRes.data.data.length > 0) setOverdue(overdueRes.data.data[0]);
-                if (fullyRes.data.data.length > 0) setFullyReviewed(fullyRes.data.data[0]);
-                if (problemList.data.data.length > 0) setProblemList(problemList.data.data);
+                setDueToday(dueRes.data.data[0] || null);
+                setFuture(futureRes.data.data[0] || null);
+                setOverdue(overdueRes.data.data[0] || null);
+                setFullyReviewed(fullyRes.data.data[0] || null);
+                setProblemList(problemList.data.data || []);
+
                 
 
             } catch (err) {
@@ -63,11 +64,9 @@ export default function Dashboard({activeTab, update, onUpdate, onMoveToTab}){
             }
         };
 
-        if (activeTab === 'Dashboard') {
-            fetchAllCategories();
-        }
+        fetchAllCategories();
 
-    }, [activeTab, update, token, logout])
+    }, [activeTab, update, token, logout]);
     
 
     if(loading) return <p>The page is loading...</p>

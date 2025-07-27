@@ -47,7 +47,7 @@ export default function AllProblems({activeTab, update, onUpdate}){
     const setProblem = (t) => {
         setIsDeleting(true);
         setTitle(t);
-    }
+    };
 
     const deleteProblem = async() => {
         try {
@@ -70,7 +70,7 @@ export default function AllProblems({activeTab, update, onUpdate}){
         }finally{
             setIsDeleting(false);
         }
-    }
+    };
         
 
 

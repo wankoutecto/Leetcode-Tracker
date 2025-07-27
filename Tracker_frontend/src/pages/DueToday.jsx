@@ -34,10 +34,8 @@ export default function DueToday({activeTab, update, onUpdate}){
             }
         };
         
-        if(activeTab === 'Due Today'){
-            fetchProblem();
-        }   
-    }, [activeTab, update, token, logout])
+        fetchProblem();
+    }, [activeTab, update, token, logout]);
     
 
     if(loading) return <p>The page is loading...</p>

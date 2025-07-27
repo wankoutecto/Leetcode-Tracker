@@ -34,10 +34,8 @@ export default function FullyReview({activeTab, update, onUpdate}){
             }
         };
         
-        if(activeTab === 'Fully Reviewed'){
-            fetchProblem();
-        }   
-    }, [activeTab, update, token, logout])
+        fetchProblem();  
+    }, [activeTab, update, token, logout]);
     
 
     if(loading) return <p>The page is loading...</p>
