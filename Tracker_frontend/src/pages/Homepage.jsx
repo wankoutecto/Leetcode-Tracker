@@ -37,7 +37,7 @@ export default function Homepage(){
     
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/problem/home");
+        const res = await axios.get("http://54.145.219.157:8080/problem/home");
         setProblemList(res.data);
       } catch (err) {
         if(!isTokenValid(token)){

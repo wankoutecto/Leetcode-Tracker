@@ -14,7 +14,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:8080/user/login', {
+            const res = await axios.post('http://54.145.219.157:8080/user/login', {
                 username,
                 password
             });

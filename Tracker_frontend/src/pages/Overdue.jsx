@@ -15,7 +15,7 @@ export default function Overdue({activeTab, update, onUpdate}){
     useEffect(() => {
         const fetchProblem = async() => {
             try {
-                const res = await axios.get("http://localhost:8080/problem/overdue", {
+                const res = await axios.get("http://54.145.219.157:8080/problem/overdue", {
                     headers:{
                         Authorization: `Bearer ${token}`
                     }

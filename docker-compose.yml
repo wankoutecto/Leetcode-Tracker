@@ -1,8 +1,6 @@
 services:
   backend:
-    build:
-      context: ./TrackerApp
-    container_name: leetcode-backend
+    image: wankou/leetcode-backend:latest
     ports:
       - "8080:8080"
     depends_on:
@@ -15,7 +13,6 @@ services:
 
   db:
     image: postgres:latest
-    container_name: leetcode-db
     environment:
       POSTGRES_DB: TrackerDb
       POSTGRES_USER: postgres
@@ -26,9 +23,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   frontend:
-    build:
-      context: ./Tracker_frontend
-    container_name: leetcode-frontend
+    image: wankou/leetcode-frontend:latest
     ports:
       - "3000:80"
     depends_on:

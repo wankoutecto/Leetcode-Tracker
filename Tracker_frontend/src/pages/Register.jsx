@@ -20,7 +20,7 @@ function Register() {
         return;
     }
     try {
-      const res = await axios.post("http://localhost:8080/user/register",{
+      const res = await axios.post("http://54.145.219.157:8080/user/register",{
         username,
         password
       });
