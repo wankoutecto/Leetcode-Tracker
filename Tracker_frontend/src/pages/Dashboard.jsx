@@ -1,17 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import '../App.css';
 import ProblemCard from './ProblemCard';
-import AddNewProblem from "./AddNewProblem";
-import DueToday from "./DueToday";
-import AllProblems from "./AllProblems";
 import { useAuth } from "../AuthContext"
-import FutureReview from "./FutureReview";
 import { isTokenValid } from "./isTokenValid";
-import Overdue from "./Overdue";
-import FullyReview from "./FullyReview";
-import {jwtDecode} from "jwt-decode";
+
 
 export default function Dashboard({activeTab, update, onUpdate, onMoveToTab}){
     const {token, logout} = useAuth();
@@ -29,19 +22,19 @@ export default function Dashboard({activeTab, update, onUpdate, onMoveToTab}){
         const fetchAllCategories = async () => {
             try {
                 const [dueRes, futureRes, overdueRes, fullyRes, problemList] = await Promise.all([
-                    axios.get("http://54.145.219.157:8080/problem/due/today", {
+                    axios.get(`${import.meta.env.VITE_API_URL}/api/problem/due-today`, {
                         headers: { Authorization: `Bearer ${token}` }
                     }),
-                    axios.get("http://54.145.219.157:8080/problem/upcoming", {
+                    axios.get(`${import.meta.env.VITE_API_URL}/api/problem/upcoming`, {
                         headers: { Authorization: `Bearer ${token}` }
                     }),
-                    axios.get("http://54.145.219.157:8080/problem/overdue", {
+                    axios.get(`${import.meta.env.VITE_API_URL}/api/problem/overdue`, {
                         headers: { Authorization: `Bearer ${token}` }
                     }),
-                    axios.get("http://54.145.219.157:8080/problem/completed", {
+                    axios.get(`${import.meta.env.VITE_API_URL}/api/problem/fully-reviewed`, {
                         headers: { Authorization: `Bearer ${token}` }
                     }),
-                    axios.get("http://54.145.219.157:8080/problem/get/all", {
+                    axios.get(`${import.meta.env.VITE_API_URL}/api/problem/all`, {
                         headers: { Authorization: `Bearer ${token}` }
                     })
                 ]);
@@ -134,11 +127,11 @@ export default function Dashboard({activeTab, update, onUpdate, onMoveToTab}){
 
             <div onClick={() => onMoveToTab("All problems")} className="dash-container">
                 <h1>All Problems</h1>
-                {problemList ?
+                {problemList.length > 0 ? (
                 <table>
                 
                     <tbody style={{pointerEvents: "none", backgroundColor:"white"}}>
-                    {problemList.map((pb) => (
+                    {problemList.slice(0, 5).map((pb) => (
                         <tr key={pb.title}>
                             <td className='title'>{pb.title}</td>
                             <td>
@@ -155,8 +148,7 @@ export default function Dashboard({activeTab, update, onUpdate, onMoveToTab}){
                         </tr>
                     ))}
                     </tbody>
-                </table>:
-                <>No List of Problems</>}
+                </table>) : (<>No List of Problems</>)}
             </div>
         
         </div>

@@ -15,14 +15,13 @@ export default function FullyReview({activeTab, update, onUpdate}){
     useEffect(() => {
         const fetchProblem = async() => {
             try {
-                const res = await axios.get("http://54.145.219.157:8080/problem/completed", {
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/problem/fully-reviewed`, {
                     headers:{
                         Authorization: `Bearer ${token}`
                     }
                 })
                 if(res.status === 200){
                     setProblemList(res.data.data);
-                    console.log(res.data.data);
                 }     
             }catch (err) {
                 if(!isTokenValid(token)){

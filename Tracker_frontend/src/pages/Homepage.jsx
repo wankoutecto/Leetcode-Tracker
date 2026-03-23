@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../App.css';
@@ -7,7 +6,6 @@ import DueToday from "./DueToday";
 import AllProblems from "./AllProblems";
 import { useAuth } from "../AuthContext"
 import FutureReview from "./FutureReview";
-import { isTokenValid } from "./isTokenValid";
 import Overdue from "./Overdue";
 import FullyReview from "./FullyReview";
 import Dashboard from "./Dashboard";
@@ -18,9 +16,11 @@ const TABS = ['Dashboard','Due Today', 'Future Review', 'Overdue', 'Fully Review
 
 export default function Homepage(){
   const { token, logout, username } = useAuth();
+  /*
   const [problemList, setProblemList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  */
   const [activeTab, setActiveTab] = useState("Dashboard");
   const navigate = useNavigate();
   const [update, setUpdate] = useState(0);
@@ -33,11 +33,13 @@ export default function Homepage(){
     setActiveTab(title);
   };
 
+/*
   useEffect(() => {
     
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://54.145.219.157:8080/problem/home");
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/problem/home`);
+        console.log("fetchData run");
         setProblemList(res.data);
       } catch (err) {
         if(!isTokenValid(token)){
@@ -51,11 +53,11 @@ export default function Homepage(){
 
     fetchData();
   }, [activeTab, token]);
-
+  
 
   if(loading) return <p>The page is loading...</p>
   if(error) return <p>Failed to fetch the data: {error.message}</p>
-
+*/
   return (
       <>
         <div className="header">
@@ -115,7 +117,6 @@ export default function Homepage(){
           <div className="add-problem-container">
             <AddNewProblem onUpdate={onUpdate} />
           </div>
-
         </div>
     </>
   );

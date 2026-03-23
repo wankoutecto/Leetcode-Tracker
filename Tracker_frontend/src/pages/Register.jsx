@@ -20,15 +20,16 @@ function Register() {
         return;
     }
     try {
-      const res = await axios.post("http://54.145.219.157:8080/user/register",{
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`,{
         username,
         password
       });
-      setUsername('');
-      setPassword('');
-      setConfirmPassword('');
+    
       if(res.status === 200){
         setSuccess("Successful register");
+        setUsername('');
+        setPassword('');
+        setConfirmPassword('');
         setError('');
         navigate('/');
         return;
@@ -96,8 +97,10 @@ function Register() {
             </label>
             
             <button type="submit">Sign up</button>
-            {error ? <p className="error">{error}</p>: null}
-            {success ? <p className="success">{success}</p> : null}
+
+            {error && <p className="error">{error}</p>}
+            {success && <p className="success">{success}</p>}
+
             <p>
               Already have an account? 
               <Link to={'/login'} className="no-underline"> Log in</Link>

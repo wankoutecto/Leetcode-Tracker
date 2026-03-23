@@ -11,16 +11,16 @@ export default function AllProblems({activeTab, update, onUpdate}){
     const [searchProblem, setSearchProblem] = useState('');
     const [isDeleting, setIsDeleting] = useState(false);
     const [title, setTitle] = useState('');
+    const [pbId, setPbId] = useState();
 
     useEffect(() => {
         const allProblem = async() => {
             try {
-                const res = await axios.get("http://54.145.219.157:8080/problem/get/all", {
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/problem/all`, {
                     headers:{
                         Authorization: `Bearer ${token}`
                     }
                 });
-                console.log(res);
                 setProblemList(res.data.data);
             } catch (err) {
                 if(err.status === 403 || err.status === 401){
@@ -40,23 +40,20 @@ export default function AllProblems({activeTab, update, onUpdate}){
     };
 
     const filterProblem = problemList.filter(pb => 
-        pb.title.toLowerCase().includes(searchProblem) ||
-        pb.dateSolved.toLowerCase().includes(searchProblem)
+        pb?.title.toLowerCase().includes(searchProblem)
     );
 
-    const setProblem = (t) => {
+    const setProblemId = (id) => {
         setIsDeleting(true);
-        setTitle(t);
+        setPbId(id);
     };
 
     const deleteProblem = async() => {
         try {
-            const encodeTitle = encodeURIComponent(title);
-            const res = await axios.delete(`http://54.145.219.157:8080/problem/delete/${encodeTitle}`,
+            const res = await axios.delete(`${import.meta.env.VITE_API_URL}/api/problem/${pbId}/delete`,
                 {headers:{Authorization: `Bearer ${token}`}}
             )
             if(res.status === 200){
-                console.log("successful delete");
                 onUpdate();
             }     
         } catch (err) {
@@ -91,7 +88,8 @@ export default function AllProblems({activeTab, update, onUpdate}){
                <tr className='title'>
                 <th>Title</th>
                 <th>Link To LeetCode</th>
-                <th >Date Solved</th>
+                <th >Next Review</th>
+                <th >Last Review</th> 
                 <th>Review Left</th>
                 <th></th>
                </tr> 
@@ -107,9 +105,13 @@ export default function AllProblems({activeTab, update, onUpdate}){
                             className='delete'
                             >Link</a>
                         </td>
-                        <td>{pb.dateSolved}</td> 
-                        <td style={{color: pb.reviewLeft > 0 ? "red" : "inherit"}} >{pb.reviewLeft}</td>
-                        <td onClick={() => setProblem(pb.title)} 
+                        <td style={{color: pb.nextReviewDate === null && "green"}}>{pb?.nextReviewDate ?? "completed"}</td> 
+                        <td>{pb.lastReviewDate}</td> 
+                        <td style={{color: pb.reviewLeft > 0 ? "red" : "green"}} >{pb.reviewLeft}</td>
+                        <td onClick={() => {
+                            setTitle(pb.title); 
+                            setProblemId(pb.id);
+                        }} 
                         className='delete'>Delete</td>
                     </tr>
                 ))}

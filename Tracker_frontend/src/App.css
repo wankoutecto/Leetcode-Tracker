@@ -157,7 +157,7 @@ button:hover {
   justify-content: center;
   align-items: center;
   height: 100vh; /* Full viewport height */
-  background-color: #f0f4f8;
+  background-color: #eaedf0;
 }
 
 .form-card {
@@ -383,4 +383,11 @@ td, th {
   .grid-display {
     grid-template-columns: 1fr;
   }
+}
+
+.notification-container {
+  display: block;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #f1f4b2;
 }

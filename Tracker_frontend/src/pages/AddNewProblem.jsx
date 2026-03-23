@@ -9,8 +9,6 @@ export default function AddNewProblem({onUpdate}){
     const {token, logout} = useAuth();
     const [title, setTitle] = useState('');
     const [link, setLink] = useState('');
-    const [dateSolved, setDateSolved] = useState('');
-    const [note, setNote] = useState('');
     const [solutionCode, setSolutionCode] = useState('');
     const [error, setError] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
@@ -26,8 +24,8 @@ export default function AddNewProblem({onUpdate}){
                 alert("You are not login. Please login to add new problem");
                 return;
             }
-            const res = await axios.post("http://54.145.219.157:8080/problem/add",
-                { title, link, dateSolved, note, solutionCode },
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/problem/add`,
+                { title, link, solutionCode },
                 {headers:{
                         Authorization: `Bearer ${token}`
                     }
@@ -36,8 +34,6 @@ export default function AddNewProblem({onUpdate}){
             if(res.status === 200){
                 setTitle('');
                 setLink('');
-                setDateSolved('');
-                setNote('');
                 setSolutionCode('');
                 setResponse("New problem Added"); 
                 setError("")
@@ -53,7 +49,6 @@ export default function AddNewProblem({onUpdate}){
                 setEdited('');
                 return;
             }
-            setError(err.message + ". Check date format: yyyy-mm-dd");
             console.error(err?.response?.data?.message || "Error Occurred");
             setResponse("");
         }
@@ -105,38 +100,18 @@ export default function AddNewProblem({onUpdate}){
                     </label>
                     <br />
                     <label>
-                        Date solved
-                        <input
-                        type="text"
-                        value={dateSolved}
-                        onChange={e => setDateSolved(e.target.value)}
-                        required
-                        ></input>
-                    </label>
-                    <br />
-                    <label>
-                        Note
-                        <input
-                        type="text"
-                        value={note}
-                        onChange={e => setNote(e.target.value)}
-                        required
-                        ></input>
-                    </label>
-                    <br />
-                    <label>
                         Solution Code
                         <input
                         type="text"
                         value={solutionCode}
-                        onChange={(e) => setSolutionCode(edited)}    
+                        onChange={(e) => setSolutionCode(e.target.value)}    
                         onClick={() => setShowPopup(true)}
                         required
                         ></input>
                     </label>
                     <button type="submit">Add New Problem</button>
-                    {response && <p>{response}</p>}
-                    {error && <p>{error}</p>}
+                    {response && <p style={{color:"green"}}>{response}</p>}
+                    {error && <p style={{color:"red"}}>{error}</p>}
                 </form>     
             </div>
             {showPopup && (

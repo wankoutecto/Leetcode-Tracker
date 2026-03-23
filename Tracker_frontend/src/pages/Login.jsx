@@ -14,11 +14,11 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://54.145.219.157:8080/user/login', {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
                 username,
                 password
             });
-            login(res.data.token, username);
+            login(res.data.data.token, username);
             navigate('/');
         } catch (error) {
             setError("Invalid username or password");
@@ -60,7 +60,7 @@ export default function Login() {
                     />
                 </label>
                 <br />
-                {error ? <p className="error">{error}</p> : null}
+                {error && <p className="error">{error}</p>}
                 <button type="submit">Log in</button>
                 <br />
                 <p>
@@ -74,5 +74,6 @@ export default function Login() {
         </div>
     );
 };
+
 
 
