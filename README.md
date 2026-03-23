@@ -99,17 +99,21 @@ Navigate to frontend folder
 cd ../Tracker_frontend
 
 1️⃣ Install dependencies
+```bash
 npm install
-
+```
 2️⃣ Start the frontend
+```bash
 npm run dev
-
+```
 3️⃣ Open in browser
+
 http://localhost:5173/
 
 🐳 Docker
+```bash
 docker-compose up --build
-
+```
 (Assuming you add a docker-compose setup for backend + frontend)
 
 📸Screenshots
