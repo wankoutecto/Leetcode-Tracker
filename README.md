@@ -66,6 +66,7 @@ The application is a full-stack solution:
 ```bash
 git clone https://github.com/<your-username>/Leetcode-tracker.git
 cd Leetcode-tracker/Tracker_backend
+```
 2️⃣ Set up PostgreSQL
 
 Create a database (example: leetcode_db)
