@@ -70,8 +70,7 @@ docker-compose up --build
 (Assuming you add a docker-compose setup for backend + frontend)
 
 📸Screenshots
-Dashboard
-![Dashboard](screenshots/dashboard_screenshot.png)
+![Dashboard](Screenshots/dashboard_screnshot.png)
 
 Dashboard / Future review’s Problems:
 
