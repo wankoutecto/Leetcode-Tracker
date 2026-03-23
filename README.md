@@ -62,7 +62,7 @@ The application is a full-stack solution:
 
 ### 🔧 Backend
 
-#### 1️⃣ Clone the repository
+1️⃣ Clone the repository
 ```bash
 git clone https://github.com/<your-username>/Leetcode-tracker.git
 cd Leetcode-tracker/Tracker_backend
@@ -89,7 +89,7 @@ Linux / WSL:
 ./mvnw clean install
 ./mvnw spring-boot:run
 
-🎨 Frontend
+###🎨 Frontend
 Navigate to frontend folder
 cd ../Tracker_frontend
 1️⃣ Install dependencies
