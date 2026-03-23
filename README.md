@@ -80,6 +80,7 @@ spring.jpa.hibernate.ddl-auto=update
 spring.jpa.hibernate.ddl-auto=update ensures tables are created automatically if they don’t exist.
 
 3️⃣ Build & run backend
+
 Navigate to the backend folder:
 ```bash
 cd ../Tracker_backend
