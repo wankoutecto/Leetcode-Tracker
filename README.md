@@ -94,6 +94,7 @@ Linux / WSL:
 ```
 
 🎨 Frontend
+
 Navigate to frontend folder
 cd ../Tracker_frontend
 
