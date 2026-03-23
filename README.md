@@ -93,7 +93,7 @@ Linux / WSL:
 ./mvnw spring-boot:run
 ```
 
-🎨 Frontend
+### 🎨 Frontend
 
 Navigate to frontend folder
 cd ../Tracker_frontend
