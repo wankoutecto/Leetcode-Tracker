@@ -74,6 +74,8 @@ Dashboard
 ![Dashboard](Screenshots/dashboard_screnshot.png)
 
 Dashboard / Future review’s Problems:
+![Dashboard](Screenshots/future_review_Screenshot.png)
+
 
 
 
