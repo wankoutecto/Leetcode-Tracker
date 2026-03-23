@@ -74,7 +74,7 @@ docker-compose up --build
 Dashboard
 ![Dashboard](Screenshots/dashboard_screnshot.png)
 
-Dashboard / Future review’s Problems:
+Future review’s Problems:
 ![FutureReview](Screenshots/future_review_Screenshot.png)
 
 
