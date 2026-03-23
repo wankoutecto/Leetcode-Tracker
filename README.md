@@ -114,13 +114,14 @@ npm run dev
 
 http://localhost:5173/
 
-🐳 Docker
+### 🐳 Docker
+#### Run Frontend and Backend
 ```bash
 docker-compose up --build
 ```
 (Assuming you add a docker-compose setup for backend + frontend)
 
-### 📸 Screenshots
+## 📸 Screenshots
 
 Dashboard
 ![Dashboard](Screenshots/dashboard_screnshot.png)
