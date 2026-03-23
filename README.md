@@ -65,7 +65,6 @@ The application is a full-stack solution:
 1️⃣ Clone the repository
 ```bash
 git clone https://github.com/<your-username>/Leetcode-tracker.git
-cd Leetcode-tracker/Tracker_backend
 ```
 2️⃣ Set up PostgreSQL
 
@@ -81,7 +80,10 @@ spring.jpa.hibernate.ddl-auto=update
 spring.jpa.hibernate.ddl-auto=update ensures tables are created automatically if they don’t exist.
 
 3️⃣ Build & run backend
-
+Navigate to the backend folder:
+```bash
+cd ../Tracker_backend
+```
 Windows (PowerShell):
 ```bash
 .\mvnw.cmd clean install
@@ -96,8 +98,9 @@ Linux / WSL:
 ### 🎨 Frontend
 
 Navigate to frontend folder
+```bash
 cd ../Tracker_frontend
-
+```
 1️⃣ Install dependencies
 ```bash
 npm install
