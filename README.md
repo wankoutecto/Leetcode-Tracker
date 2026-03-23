@@ -72,31 +72,37 @@ cd Leetcode-tracker/Tracker_backend
 Create a database (example: leetcode_db)
 
 Update application.properties in src/main/resources/:
-
+```bash
 spring.datasource.url=jdbc:postgresql://localhost:5432/leetcode_db
 spring.datasource.username=your_username
 spring.datasource.password=your_password
 spring.jpa.hibernate.ddl-auto=update
-
+```
 spring.jpa.hibernate.ddl-auto=update ensures tables are created automatically if they don’t exist.
 
 3️⃣ Build & run backend
 
 Windows (PowerShell):
+```bash
 .\mvnw.cmd clean install
 .\mvnw.cmd spring-boot:run
-
+```
 Linux / WSL:
+```bash
 ./mvnw clean install
 ./mvnw spring-boot:run
+```
 
-###🎨 Frontend
+🎨 Frontend
 Navigate to frontend folder
 cd ../Tracker_frontend
+
 1️⃣ Install dependencies
 npm install
+
 2️⃣ Start the frontend
 npm run dev
+
 3️⃣ Open in browser
 http://localhost:5173/
 
