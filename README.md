@@ -70,6 +70,7 @@ docker-compose up --build
 (Assuming you add a docker-compose setup for backend + frontend)
 
 📸Screenshots
+
 Dashboard
 ![Dashboard](Screenshots/dashboard_screnshot.png)
 
