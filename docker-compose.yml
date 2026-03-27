@@ -1,6 +1,7 @@
 services:
   backend:
-    image: wankou/leetcode-backend:latest
+    build: ./Tracker_backend
+    image: wankou/tracker-backend:v1
     ports:
       - "8080:8080"
     depends_on:
@@ -12,7 +13,7 @@ services:
       SECRET_KEY: 2E1uOv9E6zblcNUGWcKpvmkKYI5D6tJ7Rfcd2x2jsnE=
 
   db:
-    image: postgres:latest
+    image: postgres:15
     environment:
       POSTGRES_DB: TrackerDb
       POSTGRES_USER: postgres
@@ -23,9 +24,10 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   frontend:
-    image: wankou/leetcode-frontend:latest
+    build: ./Tracker_frontend
+    image: wankou/tracker-frontend:v1
     ports:
-      - "3000:80"
+      - "5173:80"
     depends_on:
       - backend
 
