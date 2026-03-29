@@ -64,7 +64,7 @@ The application is a full-stack solution:
 
 1️⃣ Clone the repository
 ```bash
-git clone https://github.com/<your-username>/Leetcode-tracker.git
+git clone https://github.com/wankoutecto/Leetcode-tracker.git
 ```
 2️⃣ Set up PostgreSQL
 
