@@ -8,16 +8,16 @@ services:
       - db
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/TrackerDb
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATASOURCE_USERNAME: your_username
+      SPRING_DATASOURCE_PASSWORD: your_password
       SECRET_KEY: 2E1uOv9E6zblcNUGWcKpvmkKYI5D6tJ7Rfcd2x2jsnE=
 
   db:
     image: postgres:15
     environment:
       POSTGRES_DB: TrackerDb
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: your_username
+      POSTGRES_PASSWORD: your_password
     ports:
       - "5432:5432"
     volumes:
