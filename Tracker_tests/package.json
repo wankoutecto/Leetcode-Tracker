@@ -1,0 +1,26 @@
+{
+  "name": "tracker_tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:api": "playwright test tests/api",
+    "test:ui": "playwright test tests/ui",
+    "test:security": "playwright test tests/security",
+    "test:perf": "playwright test tests/performance",
+    "test:report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0",
+    "axios": "^1.16.0",
+    "dotenv": "^16.1.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  }
+}
