@@ -32,11 +32,3 @@ npm run test:api
 export TEST_ENV=ci
 npm run test:api
 ```
-
-Page objects
-
-- Tests use a simple Page Object Model under `tests/pages/`. Add more page classes there and reuse in `tests/ui/` specs.
-
-Auth helpers
-
-- Use `tests/helpers/auth.ts` to perform API login and retrieve a token for authenticated API or UI tests.
