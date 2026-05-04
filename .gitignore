@@ -1,0 +1,70 @@
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDEs / Editors
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# Environment variables
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# Node (Frontend)
+# =========================
+node_modules/
+dist/
+build/
+coverage/
+
+# =========================
+# Java (Backend)
+# =========================
+target/
+*.jar
+*.war
+*.ear
+*.class
+
+# Maven wrapper logs (keep wrapper files)
+.mvn/wrapper/maven-wrapper.jar
+
+# =========================
+# Test / QA
+# =========================
+playwright-report/
+test-results/
+allure-results/
+allure-report/
+
+# =========================
+# Docker
+# =========================
+*.pid
+*.seed
+*.pid.lock
+
+# =========================
+# Misc
+# =========================
+.tmp/
+.cache/
