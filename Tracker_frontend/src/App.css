@@ -5,6 +5,9 @@ html, body {
   overflow-x: hidden; /* prevent horizontal scroll entirely */
 }
 
+h2 {
+  margin: 0;
+}
 
 .header {
   display: flex;
@@ -15,6 +18,7 @@ html, body {
 
 .button-group {
   display: flex;
+  justify-content: center;
   gap: 10px;
 }
 
@@ -61,45 +65,39 @@ button:hover {
 
 .review-problem-container {
   display: flex;
-  gap: 10px;
+  padding: 20px;
   background-color: #ecf1f5;
   align-items: flex-start;
-  justify-content: space-between;
-  margin: 0 25px;
-}
-.review-container {
-  width: 80%;
-  background-color: #ecf1f5; 
-  padding: 40px;
-
-}
-
-.grid-display {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  box-sizing: border-box;
   gap: 10px;
+  box-sizing: border-box;
 }
 
-.add-problem-container{
-   width: 20%;
-   background-color:#ecf1f5;
-   padding: 5px;
+.review-container {
+  flex: 1;
+  background-color: #ecf1f5;
+  box-sizing: border-box;
 }
 
 .review-card {
    background-color: white; 
    border-radius: 30px;
    padding: 12px;
-   margin: 5px;
    box-shadow: 0 2px 4px rgba(145, 129, 129, 0.1);
    transition: box-shadow 0.2s ease, transform 0.4s ease;
+   box-sizing: border-box;
 }
 
 .review-card:hover {
-    background-color: #f8f9f9;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transform: translateY(-4px);
     border: none; 
+}
+
+.review-card-toLink {
+  display: flex;
+  justify-content: space-between;
+  margin: none;
 }
 
 .review-card-bottom {
@@ -107,6 +105,23 @@ button:hover {
   justify-content: center;
   align-items: center;
 }
+
+.grid-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 280px);
+  justify-content: center;
+  gap: 20px;
+}
+
+.add-problem-container{
+   width: 280px;
+   min-width: 0;
+   background-color:#ecf1f5;
+   padding: 5px;
+   box-sizing: border-box;
+}
+
+
 
 .add-problem-card {
     background-color: #ffffff; 
@@ -192,8 +207,7 @@ button:hover {
 }
 
 .no-underline {
-    text-decoration: none;
-    color: rgb(37, 136, 229);
+  color: rgb(37, 136, 229);
 }
 
 
@@ -202,12 +216,6 @@ button:hover {
 }
 .success {
     color: rgb(25, 218, 147);
-}
-
-.review-card-toLink {
-  display: flex;
-  justify-content: end;
-  margin: none;
 }
 
 .info-line {
@@ -233,9 +241,26 @@ button:hover {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  width: 500px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  text-align: center;
+
+  min-width: 30%;
+  max-width: 80vw;
+
+  min-height: 200px;
+  max-height: 80vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+textarea {
+  width: 100%;
+  flex: 1;
+  min-height: 200px;
+  
+  resize: vertical;
+  box-sizing: border-box;
 }
 
 .viewStyle {
@@ -332,28 +357,21 @@ td, th {
 }
 
 .dash-container {
-  background-color: #dde1e8;
-  border-radius: 30px;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  border-radius: 10px;
   padding: 20px;
   cursor: pointer;
-  margin: 4px;
-  transition: background-color 0.7s ease, box-shadow 0.3s ease;
+  transition: background-color 0.4s ease, box-shadow 0.3s ease;
 }
 
 .dash-container:hover {
-  background-color: #d0d7e2;
+  background-color: #eff0f1;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
    transform: translateY(-4px);
 }
 
-
-
-.dash-container .card {
-  pointer-events: none;
-  background-color:  #dde1e8;
-  border-radius: 30px;
-  padding: 0;
-}
 
 
 .popup-solution {
@@ -362,32 +380,23 @@ td, th {
 }
 
 
-@media (max-width: 768px) {
-  .review-problem-container {
-    flex-direction: column;
-    margin: 10px;
-  }
-
-  .review-container,
-  .add-problem-container {
-    width: 100%;
-    padding: 10px;
-  }
-
-  .grid-display {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .grid-display {
-    grid-template-columns: 1fr;
-  }
-}
-
 .notification-container {
   display: block;
   align-items: center;
   gap: 0.75rem;
   background-color: #f1f4b2;
+}
+
+.view-problem{
+  display: flex;
+  justify-content: right;
+  margin-top: 5px;
+}
+
+.text-size {
+  font-size: 20px;
+}
+
+.code-size {
+  font-size: 17px;
 }

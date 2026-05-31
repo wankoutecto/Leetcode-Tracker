@@ -27,17 +27,18 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
-                                                   JwtFilterChain jwtFilterChain,
-                                                   CorsConfigurationSource corsConfigurationSource) throws Exception {
+                                                   JwtFilterChain jwtFilterChain) throws Exception {
         return http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/register", "/api/auth/login", "/api/problem/home").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers("/api/auth/register",
+                                "/api/auth/login",
+                                "/api/problem/home").permitAll()
+                        .anyRequest().permitAll())
                 .addFilterBefore(jwtFilterChain, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

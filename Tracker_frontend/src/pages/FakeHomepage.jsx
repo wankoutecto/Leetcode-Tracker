@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
-import AddNewProblem from "./AddNewProblem";
+import AddNewProblem from "../components/AddNewProblem";
 import axios from "axios";
 
 const TABS = ['Dashboard','Due Today', 'Future Review', 'Overdue', 'Fully Reviewed', 'All problems'];
@@ -10,59 +10,27 @@ const TABS = ['Dashboard','Due Today', 'Future Review', 'Overdue', 'Fully Review
 export default function FakeHomepage(){
     const [activeTab, setActiveTab] = useState('Dashboard');
     const navigate = useNavigate();
+    const [problems, setProblems] = useState([]);
     const [today, setToday] = useState([]);
     const [future, setFuture] = useState([]);
     const [overdue, setOverdue] = useState([]);
     const [fully, setFully] = useState([]);
     const [all, setAll] = useState([]);
 
-    const onMoveToTab = (title) => {
-    setActiveTab(title);
-  }
+    const onMoveTab = (title) => {
+        setActiveTab(title)
+    }
+    const views = {
+        "Due Today": today,
+        "Future Review": future,
+        "Fully Reviewed": fully,
+        "Overdue": overdue,
+        "All problems": all
+    };
+
 
     useEffect(() => {
-        const problemList = [
-            {
-                title: "Two Sum",
-                link: "https://leetcode.com/problems/two-sum/",
-                nextReviewDate: "2025-07-12",
-                lastReviewDate: "2025-07-09",                
-                solutionCode: "function twoSum(nums, target) {\n  const map = new Map();\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    if (map.has(complement)) {\n      return [map.get(complement), i];\n    }\n    map.set(nums[i], i);\n  }\n}",
-                reviewLeft: "2"
-            },
-            {
-                title: "Valid Parentheses",
-                link: "https://leetcode.com/problems/valid-parentheses/",
-                nextReviewDate: "2025-06-15",
-                lastReviewDate: "2025-06-11", 
-                solutionCode: "function isValid(s) {\n  const stack = [];\n  const map = { ')':'(', ']':'[', '}':'{' };\n  for (let char of s) {\n    if (['(', '[', '{'].includes(char)) {\n      stack.push(char);\n    } else if (stack.pop() !== map[char]) {\n      return false;\n    }\n  }\n  return stack.length === 0;\n}",
-                reviewLeft: "0"
-            },
-            {
-                title: "Merge Two Sorted Lists",
-                link: "https://leetcode.com/problems/merge-two-sorted-lists/",
-                nextReviewDate: "2025-10-04",
-                lastReviewDate: "2025-10-01", 
-                solutionCode: "function mergeTwoLists(l1, l2) {\n  if (!l1) return l2;\n  if (!l2) return l1;\n  if (l1.val < l2.val) {\n    l1.next = mergeTwoLists(l1.next, l2);\n    return l1;\n  } else {\n    l2.next = mergeTwoLists(l1, l2.next);\n    return l2;\n  }\n}",
-                reviewLeft: "4"
-            },
-            {
-                title: "Best Time to Buy and Sell Stock",
-                link: "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
-                nextReviewDate: "2025-01-25",
-                lastReviewDate: "2025-01-20", 
-                solutionCode: "function maxProfit(prices) {\n  let minPrice = Infinity;\n  let maxProfit = 0;\n  for (let price of prices) {\n    minPrice = Math.min(minPrice, price);\n    maxProfit = Math.max(maxProfit, price - minPrice);\n  }\n  return maxProfit;\n}",
-                reviewLeft: "1"
-            },
-            {
-                title: "Climbing Stairs",
-                link: "https://leetcode.com/problems/climbing-stairs/",
-                nextReviewDate: "2025-07-19",
-                lastReviewDate: "2025-07-05", 
-                solutionCode: "function climbStairs(n) {\n  if (n <= 2) return n;\n  let a = 1, b = 2;\n  for (let i = 3; i <= n; i++) {\n    [a, b] = [b, a + b];\n  }\n  return b;\n}",
-                reviewLeft: "3"
-            }
-        ];
+        const problemList = getProblems();
 
         setToday([problemList[0], problemList[3]]);
         setFuture([problemList[4]]);
@@ -91,31 +59,21 @@ export default function FakeHomepage(){
             </div>     
             <div className="review-problem-container">
                 <div className="review-container">
-                    {activeTab === 'Dashboard' && 
-                        <FakeDashboard 
-                        activeTab={activeTab} 
-                        today={today} 
-                        future={future} 
-                        overdue={overdue} 
+                {activeTab === "Dashboard" ? 
+                    <FakeDashboard
+                        activeTab={activeTab}
+                        today={today}
+                        future={future}
                         fully={fully}
+                        overdue={overdue}
                         all={all}
-                        onMoveToTab={onMoveToTab} />    
-                    }
-                    {activeTab === 'Due Today' && 
-                        <FakeView activeTab={activeTab} today={today} />   
-                    }
-                    {activeTab === 'Future Review' && 
-                        <FakeView activeTab={activeTab} today={future} />   
-                    }  
-                    {activeTab === 'Overdue' && 
-                        <FakeView activeTab={activeTab} today={overdue} />   
-                    }  
-                    {activeTab === 'Fully Reviewed' && 
-                        <FakeView activeTab={activeTab} today={fully} />  
-                    }    
-                    {activeTab === 'All problems' && 
-                        <FakeAll all={all} />  
-                    }        
+                        onMoveToTab={onMoveTab} 
+                    /> :
+                    <FakeView 
+                        activeTab={activeTab}
+                        views={views[activeTab]}
+                    />
+                }
                 </div >
             
                 <div className="add-problem-container">
@@ -127,50 +85,116 @@ export default function FakeHomepage(){
 }
 
 
+
+
+function getProblems(){
+    return (
+        [
+            {
+                title: "1. Two Sum",
+                link: "https://leetcode.com/problems/two-sum/",
+                nextReviewDate: "2025-07-12",
+                lastReviewDate: "2025-07-09",                
+                solutionCode: "function twoSum(nums, target) {\n  const map = new Map();\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    if (map.has(complement)) {\n      return [map.get(complement), i];\n    }\n    map.set(nums[i], i);\n  }\n}",
+                reviewLeft: "2",
+                difficulty: "Easy"
+            },
+            {
+                title: "20. Valid Parentheses",
+                link: "https://leetcode.com/problems/valid-parentheses/",
+                nextReviewDate: "2025-06-15",
+                lastReviewDate: "2025-06-11", 
+                solutionCode: "function isValid(s) {\n  const stack = [];\n  const map = { ')':'(', ']':'[', '}':'{' };\n  for (let char of s) {\n    if (['(', '[', '{'].includes(char)) {\n      stack.push(char);\n    } else if (stack.pop() !== map[char]) {\n      return false;\n    }\n  }\n  return stack.length === 0;\n}",
+                reviewLeft: "0",
+                difficulty: "Easy"
+            },
+            {
+                title: "Merge Two Sorted Lists",
+                link: "https://leetcode.com/problems/merge-two-sorted-lists/",
+                nextReviewDate: "2025-10-04",
+                lastReviewDate: "2025-10-01", 
+                solutionCode: "function mergeTwoLists(l1, l2) {\n  if (!l1) return l2;\n  if (!l2) return l1;\n  if (l1.val < l2.val) {\n    l1.next = mergeTwoLists(l1.next, l2);\n    return l1;\n  } else {\n    l2.next = mergeTwoLists(l1, l2.next);\n    return l2;\n  }\n}",
+                reviewLeft: "4",
+                difficulty: "Medium"
+            },
+            {
+                title: "121. Best Time to Buy and Sell Stock",
+                link: "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
+                nextReviewDate: "2025-01-25",
+                lastReviewDate: "2025-01-20", 
+                solutionCode: "function maxProfit(prices) {\n  let minPrice = Infinity;\n  let maxProfit = 0;\n  for (let price of prices) {\n    minPrice = Math.min(minPrice, price);\n    maxProfit = Math.max(maxProfit, price - minPrice);\n  }\n  return maxProfit;\n}",
+                reviewLeft: "1",
+                difficulty: "Easy"
+            },
+            {
+                title: "70. Climbing Stairs",
+                link: "https://leetcode.com/problems/climbing-stairs/",
+                nextReviewDate: "2025-07-19",
+                lastReviewDate: "2025-07-05", 
+                solutionCode: "function climbStairs(n) {\n  if (n <= 2) return n;\n  let a = 1, b = 2;\n  for (let i = 3; i <= n; i++) {\n    [a, b] = [b, a + b];\n  }\n  return b;\n}",
+                reviewLeft: "3",
+                difficulty: "Easy"
+            }
+        ]
+    );
+}
+
+
+
+
+
 function FakeProblemCard({activeTab, pb}){
     if (!pb) return null;
     return (
         <>
             <div className= "review-card">
                 <div className="review-card-toLink">
-                    <a
-                    href="put link here"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="no-underline viewStyle"
-                    >
-                    view problem
-                    </a>
+                    <span style={{ color: "#c7cf2b"}}>{pb.difficulty}</span>
                 </div>
 
                 <p className="page-title">{pb.title}</p>
 
-                <div className="info-line">
-                    <span>Next Review</span>
-                    <span style={{ fontWeight: 700 }}>{pb.dateSolved}</span>
-                </div>
+                <br />
 
                 <div className="info-line">
-                    <span>Last Review</span>
-                    <span style={{ fontWeight: 700 }}>{pb.dateSolved}</span>
-                </div>
-                <div className="info-line">
-                    <span>Review Left</span>
-                    <span style={{ fontWeight: 700, color: "red" }}>{pb.reviewLeft}</span>
-                </div>
-
-                <div className="info-line" style={{ pointerEvents: "none"}}>
-                    <span>Solution Code</span>
-                    <button
-                        className="no-underline viewStyle"
-                        >
+                    <span>Description: </span>
+                    <button className="no-underline viewStyle" style={{ pointerEvents: "none"}}>
                         Show
                     </button>
                 </div>
 
-                
-                
-            
+                <div className="info-line">
+                    <span>Next Review:</span>
+                    <span style={{ fontWeight: 700 }}>{pb.nextReviewDate}</span>
+                </div>
+
+                {pb.lastReviewDate && 
+                    <div className="info-line">
+                        <span>Last Review:</span>
+                        <span style={{ fontWeight: 700 }}>{pb.lastReviewDate}</span>
+                    </div>
+                }
+
+                <div className="info-line">
+                    <span>Review Left:</span>
+                    <span style={{ fontWeight: 700, 
+                        color: pb.reviewLeft > 0 ? "red": "green" }}
+                    >{pb.reviewLeft}</span>
+                </div>
+
+                <div className="info-line">
+                    <span>Solution: </span>
+                    <button className="no-underline viewStyle" style={{ pointerEvents: "none"}}>
+                        Show
+                    </button>
+                </div>
+                <div className="info-line">
+                    <span>Link: </span>
+                    <a className="no-underline viewStyle">
+                        View on Leetcode
+                    </a>
+                </div>
+        
                 <br />
                 <div className="review-card-bottom" style={{ pointerEvents: "none"}}>
                     {activeTab === "Due Today" && (
@@ -190,13 +214,20 @@ function FakeProblemCard({activeTab, pb}){
 }
 
 
-function FakeView({activeTab, today}){
+function FakeView({activeTab, views}){
     return (
-        <div className={activeTab!== "Dashboard" ? 'grid-display' : ''}>
-            {today.map((pb, idx) => (
-                <FakeProblemCard key={idx} activeTab={activeTab} pb={pb} />
-            ))}
-        </div>            
+        <>
+        {activeTab !== "All problems" ?
+            <div className={'grid-display'}>
+                {views?.map((pb, idx) => (
+                    <FakeProblemCard key={idx} activeTab={activeTab} pb={pb} />
+                ))}
+            </div> :
+            <>
+                <FakeAll all={views} />
+            </>
+        }
+        </>           
     );
 }
 
@@ -229,44 +260,35 @@ function FakeAll({all}){
 
 function FakeDashboard({activeTab, today, future, overdue, fully, all, onMoveToTab}){
     return (
-            <div 
-            className='grid-display' 
-            style={{gridTemplateColumns: "repeat(3, 1fr)"}}>
-                <div onClick={() => onMoveToTab("Due Today")} className="dash-container">
-                    <h1>Due Today</h1>
-                    <div style={{ pointerEvents: "none"}}>
-                       <FakeView activeTab={activeTab} today={[today[0]]} /> 
-                    </div>
+            <div className='grid-display' >
+                <div onClick={() => {
+                    onMoveToTab("Due Today"),
+                    FakeView(activeTab, today)
+                }
+                } className="dash-container">
+                    <h2>Due Today</h2>
+                    <h2>(<span style={{color: "red"}}> {today?.length} </span>)</h2> 
                 </div>
-    
-                <div onClick={() => onMoveToTab("Future Review")} className="dash-container">
-                    <h1>Future Review</h1>
-                        <div style={{ pointerEvents: "none" }}>
-                           <FakeView activeTab={activeTab} today={future} /> 
-                        </div>
+
+                <div onClick={() => setActiveTab("Future Review")} className="dash-container">
+                    <h2>Future Review</h2>
+                    <h2>(<span style={{color: "red"}}> {future?.length} </span>)</h2> 
                 </div>
-    
-                <div onClick={() => onMoveToTab("Overdue")} className="dash-container">
-                    <h1>Overdue</h1>
-                        <div style={{ pointerEvents: "none" }}>
-                            <FakeView activeTab={activeTab} today={overdue} />
-                        </div>
+
+                <div onClick={() => setActiveTab("Overdue")} className="dash-container">
+                    <h2>Overdue</h2>
+                    <h2>(<span style={{color: "red"}}> {overdue?.length} </span>)</h2>   
                 </div>
-    
-                <div onClick={() => onMoveToTab("Fully Reviewed")} className="dash-container">
-                    <h1>Fully Reviewed</h1>
-                        <div style={{ pointerEvents: "none" }}>
-                            <FakeView activeTab={activeTab} today={fully} />
-                        </div>
+
+                <div onClick={() => setActiveTab("Fully Reviewed")} className="dash-container">
+                    <h2>Fully Reviewed</h2>
+                    <h2>(<span style={{color: "green"}}> {fully?.length} </span>)</h2>               
                 </div>
-    
-                <div onClick={() => onMoveToTab("All problems")} className="dash-container">
-                    <h1>All Problems</h1>
-                    <div>
-                        <FakeAll all={all} />    
-                    </div>
+
+                <div onClick={() => setActiveTab("All problems")} className="dash-container">
+                    <h2>All Problems</h2>
+                    <h2>(<span style={{color: "blue"}}> {all?.length} </span>)</h2>               
                 </div>
-            
             </div>
         );
 }

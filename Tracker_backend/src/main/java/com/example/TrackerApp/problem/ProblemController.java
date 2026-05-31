@@ -9,8 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+
 @RestController
-@RequestMapping("api/problem")
+@RequestMapping("api/problems")
 public class ProblemController {
     @Autowired
     ProblemService pbService;
@@ -19,6 +21,7 @@ public class ProblemController {
     @PostMapping("add")
     public ResponseEntity<ApiResponse> addProblem(@RequestBody ProblemCreateDto pbRequest){
         try {
+            System.out.println(pbRequest);
             pbService.addUserProblem(pbRequest);
             return ResponseEntity.ok(new ApiResponse(null,pbRequest.getTitle()+ " is successfully added"));
         } catch (DuplicateResourceException e) {
@@ -29,7 +32,6 @@ public class ProblemController {
     @PostMapping("/{problemId}/reviewed")
     public ResponseEntity<ApiResponse> reviewProblem(@PathVariable Integer problemId){
         try {
-            System.out.println(problemId);
             pbService.markUserProblemReview(problemId);
             return ResponseEntity.ok(new ApiResponse(null, "Problem reviewed"));
         }catch (Exception e){
@@ -56,7 +58,7 @@ public class ProblemController {
         }
     }
 
-    @GetMapping("/upcoming")
+    @GetMapping("/future-review")
     public ResponseEntity<?> getUserProblemFutureReview(){
         try {
             return ResponseEntity.ok(new ApiResponse(pbService.getUserProblemFutureReview()));
@@ -65,7 +67,7 @@ public class ProblemController {
         }
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all-problems")
     public ResponseEntity<?> getAllUserProblems(){
         try {
             return ResponseEntity.ok(new ApiResponse(pbService.getAllUserProblems()));
@@ -92,11 +94,12 @@ public class ProblemController {
         }
     }
 
-    @PostMapping("/{pbId}/update")
+    @PutMapping("/{pbId}/update")
     public  ResponseEntity<?> updateProblem(@RequestBody ProblemResponseDto problemResponseDto, @PathVariable Integer pbId){
         try {
-            pbService.updateUserProblem(problemResponseDto, pbId);
-            return ResponseEntity.ok(new ApiResponse(null, "Successful update"));
+            ProblemResponseDto pbResponse = pbService.updateUserProblem(problemResponseDto, pbId);
+            System.out.println(pbResponse);
+            return ResponseEntity.ok(new ApiResponse(pbResponse, "Successful update"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(null, e.getMessage()));
         }

@@ -1,40 +1,49 @@
 import { useEffect, useState } from 'react';
 import '../App.css'
 import axios from 'axios';
-import ProblemCard from './ProblemCard';
+import ProblemCard from '../components/ProblemCard';
 import { useAuth } from '../AuthContext';
-import { isTokenValid } from './isTokenValid';
+import { isTokenValid } from '../utils/isTokenValid';
+import { getFullyReviewed } from '../service/ProblemService';
+import { useProblemActions } from '../hooks/useProblemActions';
+import { ActionButton } from '../components/ActionButton';
+import Popup from '../components/popup';
+import { MessageRenderer} from '../components/MessageRenderer';
 
-export default function FullyReview({activeTab, update, onUpdate}){
+export default function FullyReview(){
     const {token, logout} = useAuth();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [problemList, setProblemList] = useState([]);
+    const [refresh, setRefresh] = useState(0);
+
+    const problemEditor = useProblemActions(token, () => {
+        setRefresh(prev => prev + 1);
+    });
+
+    const onUpdate = () => {
+        setRefresh(prev => prev + 1);
+    }    
     
+    const fetchProblem = async() => {
+        try {
+            const res = await getFullyReviewed(token);
+            if(res.status === 200){
+                setProblemList(res.data.data);
+            }     
+        }catch (err) {
+            if(!isTokenValid(token)){
+                logout();
+            }
+            setError(err);
+        }finally{
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchProblem = async() => {
-            try {
-                const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/problem/fully-reviewed`, {
-                    headers:{
-                        Authorization: `Bearer ${token}`
-                    }
-                })
-                if(res.status === 200){
-                    setProblemList(res.data.data);
-                }     
-            }catch (err) {
-                if(!isTokenValid(token)){
-                    logout();
-                }
-                setError(err);
-            }finally{
-                setLoading(false);
-            }
-        };
-        
         fetchProblem();  
-    }, [activeTab, update, token, logout]);
+    }, [token, logout,refresh]);
     
 
     if(loading) return <p>The page is loading...</p>
@@ -44,19 +53,41 @@ export default function FullyReview({activeTab, update, onUpdate}){
     return (
         <>
         {problemList.length !== 0 ? 
-        <div className='grid-display'>
-            {problemList.map((pb, idx) => (
-                <ProblemCard 
-                    key={pb.id || idx} 
-                    pb={pb}
-                    token={token}
-                    onUpdate={onUpdate}
-                    activeTab={activeTab}  
-                />
-            ))}
-        </div> :
-        <p>NO Future Review Problems</p>
+            <div className='grid-display'>
+                {problemList.map((pb) => (
+                    <ProblemCard
+                        key={pb.id}
+                        pb={pb}
+                        onShowDescription={() =>
+                            problemEditor.actions.onOpenProblem(pb.id, pb.description, "text")
+                        }
+                        onShowSolution={() =>
+                            problemEditor.actions.onOpenProblem(pb.id, pb.solution, "code")
+                        }
+                        slot={
+                            <ActionButton
+                                pb={pb}
+                                onAction={() => problemEditor.actions.onResetReview(pb.id)}
+                                label="Reset Review"
+                            />
+                        }
+                    />
+                ))}
+            </div> :
+            <p>NO Problems Due Today</p>
         }
+        {problemEditor.active && (
+            <Popup
+                onClose={problemEditor.actions.onClose}
+            >
+                <MessageRenderer
+                    active={problemEditor.active}
+                    isEditing={problemEditor.isEditing}
+                    actions={problemEditor.actions}
+                />
+            </Popup>
+        )}
+
         </>
     );
 

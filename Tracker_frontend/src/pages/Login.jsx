@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, replace, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../AuthContext";
 
@@ -18,8 +18,8 @@ export default function Login() {
                 username,
                 password
             });
-            login(res.data.data.token, username);
-            navigate('/');
+            login(res.data.data, username);
+            navigate('/', {replace: true});
         } catch (error) {
             setError("Invalid username or password");
         }

@@ -1,49 +1,43 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import '../App.css';
-import ProblemCard from './ProblemCard';
+import ProblemCard from '../components/ProblemCard';
 import { useAuth } from "../AuthContext"
-import { isTokenValid } from "./isTokenValid";
+import { isTokenValid } from "../utils/isTokenValid";
+import { useNavigate } from "react-router-dom";
+import { getAllProblems, getDueToday, getFullyReviewed, getFututeReview, getOverdue } from "../service/ProblemService";
+import AllProblems from "./AllProblems";
 
 
 export default function Dashboard({activeTab, update, onUpdate, onMoveToTab}){
     const {token, logout} = useAuth();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [problemList, setProblemList] = useState([]);
+    const [allProblems, setAllProblems] = useState([]);
     const [pb, setPb] = useState('');
     const [dueToday, setDueToday] = useState(null);
     const [future, setFuture] = useState(null);
     const [overdue, setOverdue] = useState(null);
     const [fullyReviewed, setFullyReviewed] = useState(null);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
         const fetchAllCategories = async () => {
             try {
-                const [dueRes, futureRes, overdueRes, fullyRes, problemList] = await Promise.all([
-                    axios.get(`${import.meta.env.VITE_API_URL}/api/problem/due-today`, {
-                        headers: { Authorization: `Bearer ${token}` }
-                    }),
-                    axios.get(`${import.meta.env.VITE_API_URL}/api/problem/upcoming`, {
-                        headers: { Authorization: `Bearer ${token}` }
-                    }),
-                    axios.get(`${import.meta.env.VITE_API_URL}/api/problem/overdue`, {
-                        headers: { Authorization: `Bearer ${token}` }
-                    }),
-                    axios.get(`${import.meta.env.VITE_API_URL}/api/problem/fully-reviewed`, {
-                        headers: { Authorization: `Bearer ${token}` }
-                    }),
-                    axios.get(`${import.meta.env.VITE_API_URL}/api/problem/all`, {
-                        headers: { Authorization: `Bearer ${token}` }
-                    })
+                const [dueRes, futureRes, overdueRes, fullyRes, allProblems] = await Promise.all([
+                    getDueToday(token),
+                    getFututeReview(token),
+                    getOverdue(token),
+                    getFullyReviewed(token),
+                    getAllProblems(token)
                 ]);
                 
-                setDueToday(dueRes.data.data[0] || null);
-                setFuture(futureRes.data.data[0] || null);
-                setOverdue(overdueRes.data.data[0] || null);
-                setFullyReviewed(fullyRes.data.data[0] || null);
-                setProblemList(problemList.data.data || []);
+                setDueToday(dueRes.data.data);
+                setFuture(futureRes.data.data);
+                setOverdue(overdueRes.data.data);
+                setFullyReviewed(fullyRes.data.data);
+                setAllProblems(allProblems.data.data);
 
                 
 
@@ -66,89 +60,30 @@ export default function Dashboard({activeTab, update, onUpdate, onMoveToTab}){
     if(error) return <p>Failed to fetch the data: {error.message}</p>
 
     return (
-        <div 
-        className='grid-display' 
-        style={{gridTemplateColumns: "repeat(3, 1fr)"}}>
-            <div onClick={() => onMoveToTab("Due Today")} className="dash-container">
-                <h1>Due Today</h1>
-                {dueToday ? (
-                    <div style={{ pointerEvents: "none" }}>
-                        <ProblemCard
-                            pb={dueToday}
-                            token={token}
-                            onUpdate={onUpdate}
-                            activeTab="Dashboard"
-                        />
-                    </div>
-                ) : <p>No due problems</p>}
+        <div className='grid-display' >
+            <div onClick={() => navigate("/due-today")} className="dash-container">
+                <h2>Due Today</h2>
+                <h2>(<span style={{color: "red"}}> {dueToday?.length} </span>)</h2> 
             </div>
 
-            <div onClick={() => onMoveToTab("Future Review")} className="dash-container">
-                <h1>Future Review</h1>
-                {future ? (
-                    <div style={{ pointerEvents: "none" }}>
-                        <ProblemCard
-                            pb={future}
-                            token={token}
-                            onUpdate={onUpdate}
-                            activeTab="Dashboard"
-                        />
-                    </div>
-                ) : <p>No future problems</p>}
+            <div onClick={() => navigate("/future-review")} className="dash-container">
+                <h2>Future Review</h2>
+                <h2>(<span style={{color: "red"}}> {future?.length} </span>)</h2> 
             </div>
 
-            <div onClick={() => onMoveToTab("Overdue")} className="dash-container">
-                <h1>Overdue</h1>
-                {overdue ? (
-                    <div style={{ pointerEvents: "none" }}>
-                        <ProblemCard
-                            pb={overdue}
-                            token={token}
-                            onUpdate={onUpdate}
-                            activeTab="Dashboard"
-                        />
-                    </div>
-                ) : <p>No overdue problems</p>}
+            <div onClick={() => navigate("/overdue")} className="dash-container">
+                <h2>Overdue</h2>
+                <h2>(<span style={{color: "red"}}> {overdue?.length} </span>)</h2>   
             </div>
 
-            <div onClick={() => onMoveToTab("Fully Reviewed")} className="dash-container">
-                <h1>Fully Reviewed</h1>
-                {fullyReviewed ? (
-                    <div style={{ pointerEvents: "none" }}>
-                        <ProblemCard
-                            pb={fullyReviewed}
-                            token={token}
-                            onUpdate={onUpdate}
-                            activeTab="Dashboard"
-                        />
-                    </div>
-                ) : <p>No fully reviewed problems</p>}
+            <div onClick={() => navigate("/fully-reviewed")} className="dash-container">
+                <h2>Fully Reviewed</h2>
+                <h2>(<span style={{color: "green"}}> {fullyReviewed?.length} </span>)</h2>               
             </div>
 
-            <div onClick={() => onMoveToTab("All problems")} className="dash-container">
-                <h1>All Problems</h1>
-                {problemList.length > 0 ? (
-                <table>
-                
-                    <tbody style={{pointerEvents: "none", backgroundColor:"white"}}>
-                    {problemList.slice(0, 5).map((pb) => (
-                        <tr key={pb.title}>
-                            <td className='title'>{pb.title}</td>
-                            <td>
-                                <a href={pb.link} 
-                                target='_blank' 
-                                rel='noopener noreferrer'
-                                className='delete'
-                                >Link</a>
-                            </td>
-                            <td>{pb.dateSolved}</td> 
-                            <td style={{color: pb.reviewLeft > 0 ? "red" : "inherit"}} >{pb.reviewLeft}</td>
-                            <td onClick={() => setProblem(pb.title)} 
-                            className='delete'>Delete</td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>) : (<>No List of Problems</>)}
+            <div onClick={() => navigate("/all-problems")} className="dash-container">
+                <h2>All Problems</h2>
+                <h2>(<span style={{color: "blue"}}> {allProblems?.length} </span>)</h2>               
             </div>
         
         </div>

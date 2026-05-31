@@ -20,9 +20,13 @@ public class ReviewStatus {
     @Transient //prevent field to be saved in DB(like INTERVALS)
     private static final int[] INTERVALS = {3,7,14,28};
 
-    public void startReview(){
+    public void scheduleFirstReview(){
         this.intervalIndex = 0;
-        this.nextReviewDate = LocalDate.now().plusDays(INTERVALS[intervalIndex]);
+
+        //just for texting
+        LocalDate solved = LocalDate.now().minusDays(3);
+
+        this.nextReviewDate = solved.plusDays(INTERVALS[intervalIndex]);
         this.reviewLeft = INTERVALS.length;
     }
     public void markReview(){

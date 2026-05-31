@@ -7,9 +7,8 @@ import com.example.TrackerApp.problem.dto.ProblemResponseDto;
 import com.example.TrackerApp.user.UserAccount;
 import com.example.TrackerApp.user.UserRepository;
 import com.example.TrackerApp.review.ReviewStatus;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
@@ -23,6 +22,8 @@ public class ProblemService {
     ProblemMapper problemMapper;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ModelMapper modelMapper;
 
     public Problem getUserProblemById(Integer pbId) {
         Integer userId = getUserAccount().getUserId();
@@ -31,25 +32,27 @@ public class ProblemService {
     }
 
     public UserAccount getUserAccount(){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByUsername(username)
+        //String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByUsername("steve")
                 .orElseThrow(()-> new ResourceNotFoundException("User is not logged in"));
     }
 
 
     public void addUserProblem(ProblemCreateDto pbRequest) {
-        UserAccount userAccount = getUserAccount();
-        if(problemRepository.findByUserAccount_UserIdAndTitle(userAccount.getUserId(),pbRequest.getTitle()).isPresent()){
-            throw new DuplicateResourceException("You already added this problem: " + pbRequest.getTitle());
+        if(pbRequest.getSlug() == null) {
+            pbRequest.setSlug(pbRequest.getTitle().toLowerCase().replaceAll("\\s+", "-"));
         }
-        Problem pb = new Problem();
-        String title = pbRequest.getTitle();
-        if(title == null || title.isBlank()) throw new IllegalArgumentException("Title is required");
-        pb.setTitle(pbRequest.getTitle().strip().toLowerCase());
-        pb.setLink(pbRequest.getLink());
-        pb.setSolutionCode(pbRequest.getSolutionCode());
+        if(pbRequest.getCreatedAt() == null){
+            pbRequest.setCreatedAt(LocalDate.now());
+        }
+        UserAccount userAccount = getUserAccount();
+        if(problemRepository.findByUserAccount_UserIdAndSlug(userAccount.getUserId(),pbRequest.getSlug()).isPresent()){
+            throw new DuplicateResourceException("You have already added this problem: " + pbRequest.getTitle());
+        }
+        Problem pb = modelMapper.map(pbRequest, Problem.class);
+
         ReviewStatus reviewStatus = new ReviewStatus();
-        reviewStatus.startReview();
+        reviewStatus.scheduleFirstReview();
         pb.setReviewStatus(reviewStatus);
         pb.setUserAccount(userAccount);
         problemRepository.save(pb);
@@ -98,10 +101,10 @@ public class ProblemService {
         return problemMapper.toProblemDtoList(problemList);
     }
 
-    public void updateUserProblem(ProblemResponseDto problemResponseDto, Integer pbId) {
+    public ProblemResponseDto updateUserProblem(ProblemResponseDto problemResponseDto, Integer pbId) {
         Problem problem = getUserProblemById(pbId);
-        problem.setSolutionCode(problemResponseDto.getSolutionCode());
-        problemRepository.save(problem);
+        problem.setSolution(problemResponseDto.getSolution());
+        return problemMapper.toProblemDto(problemRepository.save(problem));
     }
 
     public void deleteUserProblem(Integer pbId) {
@@ -115,7 +118,7 @@ public class ProblemService {
             throw new RuntimeException("Sorry you can't reset this problem. "
                     + problem.getTitle() + " is not fully reviewed");
         }
-        problem.getReviewStatus().startReview();
+        problem.getReviewStatus().scheduleFirstReview();
         problemRepository.save(problem);
     }
 
