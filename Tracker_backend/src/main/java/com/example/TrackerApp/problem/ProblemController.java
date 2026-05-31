@@ -21,7 +21,6 @@ public class ProblemController {
     @PostMapping("add")
     public ResponseEntity<ApiResponse> addProblem(@RequestBody ProblemCreateDto pbRequest){
         try {
-            System.out.println(pbRequest);
             pbService.addUserProblem(pbRequest);
             return ResponseEntity.ok(new ApiResponse(null,pbRequest.getTitle()+ " is successfully added"));
         } catch (DuplicateResourceException e) {

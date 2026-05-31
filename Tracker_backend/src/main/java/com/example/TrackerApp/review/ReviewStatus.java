@@ -22,11 +22,7 @@ public class ReviewStatus {
 
     public void scheduleFirstReview(){
         this.intervalIndex = 0;
-
-        //just for texting
-        LocalDate solved = LocalDate.now().minusDays(3);
-
-        this.nextReviewDate = solved.plusDays(INTERVALS[intervalIndex]);
+        this.nextReviewDate = LocalDate.now().plusDays(INTERVALS[intervalIndex]);
         this.reviewLeft = INTERVALS.length;
     }
     public void markReview(){

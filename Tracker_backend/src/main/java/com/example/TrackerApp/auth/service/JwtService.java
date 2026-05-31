@@ -32,7 +32,7 @@ public class JwtService {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 60000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 10))) //expire after 10 min
                 .signWith(key)
                 .compact();
     }
