@@ -7,8 +7,8 @@ export default function Popup({ onClose, children }) {
     useOutsideClick(boxRef, onClose);
 
     return (
-        <div className="popup-container">
-            <div className="popup-box" ref={boxRef}>
+        <div className="Popup-container">
+            <div className="Popup-box" ref={boxRef}>
                 {children} 
             </div>
         </div>

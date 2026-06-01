@@ -5,7 +5,7 @@ export function useProblemActions(token, onUpdate) {
     const [active, setActive] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
 
-    // OPEN popup
+    // OPEN Popup
     const onOpenProblem = (problemId, msg, type = "text") => {
         setActive({
             problemId,

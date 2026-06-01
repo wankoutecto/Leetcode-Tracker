@@ -228,7 +228,7 @@ button:hover {
 .info-line button{
   padding: 2px;
 }
-.popup-container{
+.Popup-container{
   position:fixed;
   inset: 0; /*make the background take the entire page */
   background-color: rgba(0, 0, 0, 0.5); /* dark background */
@@ -237,7 +237,7 @@ button:hover {
   align-items: center;
 }
 
-.popup-box {
+.Popup-box {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
@@ -374,7 +374,7 @@ td, th {
 
 
 
-.popup-solution {
+.Popup-solution {
   width: 200px;
   background-color: #dde1e8;
 }

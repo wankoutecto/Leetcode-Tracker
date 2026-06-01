@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../App.css';
-import Popup from './popup';
+import Popup from './Popup';
 import { formatDate } from '../utils/formatDate';
 
 export default function ProblemCard({pb, onShowDescription, onShowSolution, slot}){

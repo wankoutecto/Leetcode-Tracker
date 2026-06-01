@@ -3,7 +3,7 @@ import { use, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from "../AuthContext"
 import { isTokenValid } from '../utils/isTokenValid';
-import Popup from './popup';
+import Popup from './Popup';
 import { addProblem } from '../service/ProblemService';
 
 

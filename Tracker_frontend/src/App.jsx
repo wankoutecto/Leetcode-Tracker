@@ -38,7 +38,7 @@ export default function App(){
       <Route path="/public" element={<FakeHomepage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/popup" element={<Popup />} />
+      <Route path="/Popup" element={<Popup />} />
     </Routes>
   );
 }
