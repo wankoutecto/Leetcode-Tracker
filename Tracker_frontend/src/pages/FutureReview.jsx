@@ -7,7 +7,7 @@ import { isTokenValid } from '../utils/isTokenValid';
 import { getFututeReview } from '../service/ProblemService';
 import { useProblemActions } from '../hooks/useProblemActions';
 import { ActionButton } from '../components/ActionButton';
-import Popup from '../components/popup';
+import Popup from '../components/Popup';
 import { MessageRenderer} from '../components/MessageRenderer';
 
 export default function FutureReview(){

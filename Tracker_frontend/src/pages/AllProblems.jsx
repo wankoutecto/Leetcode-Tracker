@@ -5,7 +5,7 @@ import { useAuth } from "../AuthContext"
 import { isTokenValid } from '../utils/isTokenValid';
 import { getAllProblems, deleteProblem } from '../service/ProblemService';
 import { formatDate } from '../utils/formatDate';
-import Popup from '../components/popup';
+import Popup from '../components/Popup';
 import { useProblemActions } from '../hooks/useProblemActions';
 
 

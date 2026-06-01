@@ -5,7 +5,7 @@ import { useAuth } from '../AuthContext';
 import { getOverdue } from '../service/ProblemService';
 import { useProblemActions } from '../hooks/useProblemActions';
 import { ActionButton } from '../components/ActionButton';
-import Popup from '../components/popup';
+import Popup from '../components/Popup';
 import { MessageRenderer } from '../components/MessageRenderer';
 
 export default function Overdue() {
