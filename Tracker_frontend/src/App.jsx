@@ -12,7 +12,7 @@ import Overdue from "./pages/Overdue";
 import FullyReview from "./pages/FullyReview";
 import AllProblems from "./pages/AllProblems";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Popup from "./components/popup";
+import Popup from "./components/Popup";
 
 
 export default function App(){
