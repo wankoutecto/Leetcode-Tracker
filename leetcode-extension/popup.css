@@ -1,0 +1,114 @@
+body{
+    overflow:visible;
+    width: 350px;
+    background-color: rgb(243, 245, 250);
+    padding: 4px;
+}
+
+input{
+    margin-bottom: 10px;
+}
+.main-title {
+    text-align: center;
+}
+
+.label-title{
+    color: rgb(15, 14, 14);
+    margin: 4px;
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: 500;
+}
+.page{
+    display: none;
+}
+
+#title{
+  font-size: 15px;  
+  margin: 4px;
+}
+
+button{
+    background-color: rgb(44, 147, 238);
+    border: 2px solid rgb(44, 147, 238);
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 6px;
+    margin: 0;
+    color: white;
+}
+
+button:hover {
+    background-color: #61afeb;
+    border-color: #aaa;
+}
+
+.problemSave-wrapper{
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+    gap: 10px;
+    border-radius: 6px;
+    background-color: white;
+    padding: 2px 6px;
+}
+
+.review-wrapper{
+    border-radius: 6px;
+    
+    padding: 2px 6px;
+    margin-top: 8px;
+}
+
+.red-dot {
+  width: 15px;
+  height: 15px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+#output, #loading{
+    font-size: 18px;
+}
+
+#success{
+    color: rgb(96, 203, 96);
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+#problem-container {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.problem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 15px;
+    background-color: rgb(228, 231, 235);
+    margin-bottom: 10px;
+    border-radius: 6px;
+    padding: 2px 6px;
+}
+
+#bottom-page{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.bottom-link {
+    color: #006bf6;
+    font-size: 15px;
+    transition: color 0.2s ease;
+}
+
+.bottom-link:hover{
+    color: #61afeb;
+}
