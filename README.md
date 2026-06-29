@@ -124,10 +124,10 @@ docker-compose up --build
 ## 📸 Screenshots
 
 Dashboard
-![Dashboard](Screenshots/dashboard_screnshot.png)
+![Dashboard](Screenshots/Dashboard.png)
 
 Future review’s Problems:
-![FutureReview](Screenshots/future_review_Screenshot.png)
+![FutureReview](Screenshots/Futur_review.png)
 
 
 
