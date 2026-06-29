@@ -73,7 +73,8 @@ GET /api/reviews/overdue
 GET /api/reviews/upcoming
 ---
 
-## 💻 Running Locally
+---
+### 💻 Running Locally
 
 ### 🔧 Backend
 
