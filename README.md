@@ -34,11 +34,24 @@ The application is a full-stack solution:
 
 ## 🛠 Tech Stack
 
-- **Frontend:** React  
-- **Backend:** Java, Spring Boot, Spring Data JPA (Hibernate)  
-- **Database:** PostgreSQL  
-- **Containerization:** Docker  
-- **Deployment:** Render  
+**Frontend:**
+- React
+- JavaScript
+- Axios
+---
+
+**Backend:**
+- Java
+- Spring Boot
+- Spring Data JPA (Hibernate)
+---
+
+**Database:**
+- PostgreSQL
+   
+**DevOps** 
+- Docker  
+- Render  
 
 ---
 
@@ -59,6 +72,8 @@ The application is a full-stack solution:
 - Social sharing and friend challenges  
 
 ---
+
+
 ###  ✅ API Section
 ```bash
 ## API Endpoints
@@ -71,9 +86,10 @@ DELETE /api/problems/{id}
 GET /api/reviews/today
 GET /api/reviews/overdue
 GET /api/reviews/upcoming
----
+```
 
 ---
+
 ### 💻 Running Locally
 
 ### 🔧 Backend
