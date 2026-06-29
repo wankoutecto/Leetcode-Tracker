@@ -38,7 +38,7 @@ The application is a full-stack solution:
 - **Backend:** Java, Spring Boot, Hibernate  
 - **Database:** PostgreSQL  
 - **Containerization:** Docker  
-- **Deployment:** AWS (EC2)  
+- **Deployment:** Render  
 
 ---
 
