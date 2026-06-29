@@ -7,7 +7,7 @@ Keep a structured record of the problems you have already solved, along with rev
 
 ## 🚀 Project Description
 
-LeetCode Tracker is a full-stack application that helps developers organize coding practice using spaced repetition. Instead of manually remembering which problems to revisit, the application automatically schedules future reviews based on previous review activity.
+LeetCode Tracker is a full-stack web application that helps developers retain problem-solving knowledge using a spaced repetition workflow. The backend exposes REST APIs built with Spring Boot, persists data in PostgreSQL through Spring Data JPA (Hibernate), and automatically calculates future review schedules based on user activity. The React frontend provides an interactive dashboard for tracking due, overdue, and upcoming reviews.
 
 Problems are automatically scheduled for review and categorized into:
 
