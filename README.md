@@ -38,13 +38,11 @@ The application is a full-stack solution:
 - React
 - JavaScript
 - Axios
----
 
 **Backend:**
 - Java
 - Spring Boot
 - Spring Data JPA (Hibernate)
----
 
 **Database:**
 - PostgreSQL
