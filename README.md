@@ -7,7 +7,7 @@ Keep a structured record of the problems you have already solved, along with rev
 
 ## 🚀 Project Description
 
-LeetCode Tracker helps users track and review LeetCode problems using a **spaced repetition approach**.
+LeetCode Tracker is a full-stack application that helps developers organize coding practice using spaced repetition. Instead of manually remembering which problems to revisit, the application automatically schedules future reviews based on previous review activity.
 
 Problems are automatically scheduled for review and categorized into:
 
@@ -22,9 +22,9 @@ Problems are automatically scheduled for review and categorized into:
 The application is a full-stack solution:
 
 ### Backend
-- Implemented with **Spring Boot**
+- Build a Restful API using **Spring Boot**
 - Uses **PostgreSQL** for data persistence  
-- Scheduling logic automatically updates review intervals based on user activity  
+- Scheduling logic automatically updates review intervals based on user activity. When a user reviews a problem, the backend automatically calculates the next review date based on the review outcome. This enables a spaced repetition workflow without manual scheduling. 
 
 ### Frontend
 - Built with **React**
@@ -35,7 +35,7 @@ The application is a full-stack solution:
 ## 🛠 Tech Stack
 
 - **Frontend:** React  
-- **Backend:** Java, Spring Boot, Hibernate  
+- **Backend:** Java, Spring Boot, Spring Data JPA (Hibernate)  
 - **Database:** PostgreSQL  
 - **Containerization:** Docker  
 - **Deployment:** Render  
@@ -45,6 +45,8 @@ The application is a full-stack solution:
 ## ✨ Features
 
 ### ✅ Current Features
+- Jwt Authentication
+- CRUD operations for coding problems
 - Track problems by status: Today, Future, Overdue  
 - Review history with timestamps and notes  
 - Mark problems as completed and automatically update progress  
@@ -56,6 +58,19 @@ The application is a full-stack solution:
 - Email notifications for overdue problems  
 - Social sharing and friend challenges  
 
+---
+###  ✅ API Section
+```bash
+## API Endpoints
+
+POST   /api/problems
+GET    /api/problems
+PUT    /api/problems/{id}
+DELETE /api/problems/{id}
+
+GET /api/reviews/today
+GET /api/reviews/overdue
+GET /api/reviews/upcoming
 ---
 
 ## 💻 Running Locally
