@@ -159,8 +159,9 @@ Dashboard
 Future review’s Problems:
 ![FutureReview](Screenshots/Futur_review.png)
 
-Video
-![Demo](Screenshots/Leetcode-tracker-recording (1).mp4)
+## Demo Video
+
+🎥 **Watch the full demo here:** https://www.linkedin.com/posts/steve-wankou-9a9b5a2b6_java-springboot-backend-activity-7477470536516800512-9Gub?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEv9QhEB70xd9QEKYx7bS4ysrU6-nI6InPI
 
 
 
