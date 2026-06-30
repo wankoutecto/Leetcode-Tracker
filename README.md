@@ -151,7 +151,7 @@ docker-compose up --build
 ```
 (Assuming you add a docker-compose setup for backend + frontend)
 
-## 📸 Screenshots
+## 📸 Screenshots and Recording
 
 Dashboard
 ![Dashboard](Screenshots/Dashboard.png)
@@ -159,6 +159,8 @@ Dashboard
 Future review’s Problems:
 ![FutureReview](Screenshots/Futur_review.png)
 
+Video
+![Demo](Screenshots/Leetcode-tracker-recording (1).mp4)
 
 
 
